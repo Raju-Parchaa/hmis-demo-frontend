@@ -2,32 +2,57 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 function App() {
-  const [url, setUrl] = useState("");
-  const baseUrl = "http://localhost:8080/";
+  const [url, setUrl] = useState("https://www.parchaa.com/");
+  const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
-    const start = async () => {
-      const link = await axios.get(`${baseUrl}` + "home");
-      setUrl(link.data.url);
-    };
-    start();
+    if (!loggedIn) {
+      const token = localStorage.getItem("token");
+      if (token) {
+        setUrl(
+          `https://app.parchaa.com/version-raju-25-2/doctor_parchaa_index/9115096873/${token}`
+        );
+        setLoggedIn(true);
+      }
+    }
   }, []);
 
-  const handleHome = async () => {
-    const link = await axios.get(`${baseUrl}` + "home");
-    setUrl(link.data.url);
+  useEffect(() => {
+    console.log(url);
+  }, [url]);
+
+  const handleHome = () => {
+    setUrl("https://www.parchaa.com/home");
   };
-  const handleApp = async () => {
-    const link = await axios.get(`${baseUrl}` + "app");
-    setUrl(link.data.url);
+  const handleApp = () => {
+    if (!loggedIn) {
+      axios
+        .post(
+          "https://app.parchaa.com/version-raju-25-2/api/1.1/wf/login-from-frontend",
+          { phone: "9115096873" },
+          {
+            headers: {
+              Authorization: `Bearer 8468803d9cc6eb75be404d9884ca12fd`
+            }
+          }
+        )
+        .then((res) => {
+          const token = res.data.response.code;
+          localStorage.setItem("token", token);
+          setUrl(
+            `https://app.parchaa.com/version-raju-25-2/doctor_parchaa_index/9115096873/${token}`
+          );
+          setLoggedIn(true);
+        });
+    } else {
+      setUrl("https://app.parchaa.com/version-raju-25-2/doctor_parchaa_index");
+    }
   };
-  const handleAbout = async () => {
-    const link = await axios.get(`${baseUrl}` + "about");
-    setUrl(link.data.url);
+  const handleAbout = () => {
+    setUrl("https://www.parchaa.com/about");
   };
-  const handleContact = async () => {
-    const link = await axios.get(`${baseUrl}` + "contact");
-    setUrl(link.data.url);
+  const handleContact = () => {
+    setUrl("https://www.parchaa.com/contact");
   };
 
   return (
@@ -39,8 +64,9 @@ function App() {
             <button onClick={handleHome}>Home</button>
           </div>
           <div>
-            <button onClick={handleApp}>App</button>
+            <button onClick={handleApp}>Log in</button>
           </div>
+
           <div>
             <button onClick={handleAbout}>About us</button>
           </div>
