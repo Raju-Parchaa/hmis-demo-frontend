@@ -1,25 +1,9 @@
 import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { Redirect } from "react-router6-redirect";
+import { useState } from "react";
 import Doctor from "./Doctor";
 import Reception from "./Reception";
 import patients_data from "./patient_db.json";
-
-function Home() {
-  return (
-    <div>
-      <div>
-        <ul>
-          <li>
-            <Link to="/doctor">Hi</Link>
-          </li>
-          <li>
-            <Link to="/reception">Hello</Link>
-          </li>
-        </ul>
-      </div>
-    </div>
-  );
-}
 
 function App() {
   const [patients, setPatients] = useState(patients_data);
@@ -47,7 +31,7 @@ function App() {
         </div>
         <div></div>
         <Routes>
-          {/* <Route path="/" element={<Redirect to="/hi" />} /> */}
+          <Route path="/" element={<Redirect from="/" to="/reception" />} />
           <Route path="/doctor" element={<Doctor patients={patients} />} />
           <Route
             path="/reception"

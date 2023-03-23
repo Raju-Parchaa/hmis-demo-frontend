@@ -104,7 +104,10 @@ function Reception(props) {
                 "https://app.parchaa.com/version-abdm/api/1.1/wf/HMIS-login-user-link",
                 { phone: newPatient.mobile }
               )
-              .then((res) => console.log(res));
+              .then((res) => {
+                setSendLink(false);
+                console.log(res);
+              });
           }}
         >
           Send checkin link to patient
