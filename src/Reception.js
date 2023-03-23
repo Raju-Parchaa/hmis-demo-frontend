@@ -70,6 +70,7 @@ function Reception(props) {
 
   return (
     <div>
+      <h1>Reception</h1>
       <RegisterForm
         handleSubmit={handleSubmit}
         name={name}

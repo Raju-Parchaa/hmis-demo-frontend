@@ -7,6 +7,8 @@ import patients_data from "./patient_db.json";
 
 function App() {
   const [patients, setPatients] = useState(patients_data);
+  const [loggedInDoctor, setLoggedInDoctor] = useState(null);
+  const [loggedIn, setLoggedIn] = useState(false);
 
   return (
     <div>
@@ -32,7 +34,18 @@ function App() {
         <div></div>
         <Routes>
           <Route path="/" element={<Redirect from="/" to="/reception" />} />
-          <Route path="/doctor" element={<Doctor patients={patients} />} />
+          <Route
+            path="/doctor"
+            element={
+              <Doctor
+                patients={patients}
+                loggedIn={loggedIn}
+                loggedInDoctor={loggedInDoctor}
+                setLoggedIn={(val) => setLoggedIn(val)}
+                setLoggedInDoctor={(val) => setLoggedInDoctor(val)}
+              />
+            }
+          />
           <Route
             path="/reception"
             element={

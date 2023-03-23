@@ -28,6 +28,8 @@ export const FrontEnd = ({ doctor, patients }) => {
 
   return (
     <div>
+      <h1>Hello Dr.{doctor.name}</h1>
+      <h3>Please find your appointments here</h3>
       <div className="container-fluid">
         {patients.map((patient) => (
           <Patient patient={patient} key={patient.id} />
