@@ -35,6 +35,20 @@ export const FrontEnd = ({ doctor, patients }) => {
           <Patient patient={patient} key={patient.id} />
         ))}
       </div>
+      <div>
+        <h3>Patient Name - rishabh</h3>
+        <ul>
+          <li>Age - 23</li>
+          <li>Chief Complaint - Cough</li>
+          <li>Medications - none</li>
+        </ul>
+        <button
+          className="btn btn-success"
+          onClick={() => handlePatientProfile(1234)}
+        >
+          View Profile
+        </button>
+      </div>
     </div>
   );
 };

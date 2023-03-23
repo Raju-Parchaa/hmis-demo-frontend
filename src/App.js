@@ -1,34 +1,49 @@
 import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
 import { Redirect } from "react-router6-redirect";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Doctor from "./Doctor";
 import Reception from "./Reception";
 import patients_data from "./patient_db.json";
 
 function App() {
-  const [patients, setPatients] = useState(patients_data);
+  const [patients, setPatients] = useState([]);
   const [loggedInDoctor, setLoggedInDoctor] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const items = JSON.parse(localStorage.getItem("patients"));
+    if (items) {
+      setPatients(items);
+    } else {
+      setPatients(patients_data);
+      localStorage.setItem("patients", JSON.stringify(patients));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("patients", JSON.stringify(patients));
+    console.log(patients);
+  }, [patients]);
 
   return (
     <div>
       <Router>
         <div className="navbar navbar-expand-lg navbar-light bg-primary">
           <h1
-            className="navbar-text"
+            className="navbar-text col-8"
             style={{ paddingLeft: 10, color: "white", fontFamily: "serif" }}
           >
             Welcome to HMIS
           </h1>
-          <span>
-            <button>
-              <Link to="/doctor">Doctor</Link>
-            </button>
+          <span className="col-2">
+            <Link to="/doctor">
+              <button>Doctor</button>
+            </Link>
           </span>
-          <span>
-            <button>
-              <Link to="/reception">Reception</Link>
-            </button>
+          <span className="col-2">
+            <Link to="/reception">
+              <button>Reception</button>
+            </Link>
           </span>
         </div>
         <div></div>
