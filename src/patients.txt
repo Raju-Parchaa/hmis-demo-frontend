@@ -1,0 +1,21 @@
+{
+  "name": "Rishabh",
+  "id": "1234",
+  "complaint": "Cough",
+  "age": 34,
+  "medications": "none"
+},
+{
+  "name": "Varis",
+  "id": "5678",
+  "complaint": "Back pain",
+  "age": 43,
+  "medications": "none"
+},
+{
+  "name": "Rajveer",
+  "id": "1122",
+  "complaint": "Chest pain",
+  "age": 83,
+  "medications": "none"
+}

@@ -1,90 +1,65 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
+import { useState, useEffect } from "react";
+import Doctor from "./Doctor";
+import Reception from "./Reception";
+import patients_data from "./patient_db.json";
+
+function Home() {
+  return (
+    <div>
+      <div>
+        <ul>
+          <li>
+            <Link to="/doctor">Hi</Link>
+          </li>
+          <li>
+            <Link to="/reception">Hello</Link>
+          </li>
+        </ul>
+      </div>
+    </div>
+  );
+}
 
 function App() {
-  const [url, setUrl] = useState("https://www.parchaa.com/");
-  const [loggedIn, setLoggedIn] = useState(false);
-
-  useEffect(() => {
-    if (!loggedIn) {
-      const token = localStorage.getItem("token");
-      if (token) {
-        setUrl(
-          `https://app.parchaa.com/version-raju-25-2/doctor_parchaa_index/9115096873/${token}`
-        );
-        setLoggedIn(true);
-      }
-    }
-  }, []);
-
-  useEffect(() => {
-    console.log(url);
-  }, [url]);
-
-  const handleHome = () => {
-    setUrl("https://www.parchaa.com/home");
-  };
-  const handleApp = () => {
-    if (!loggedIn) {
-      axios
-        .post(
-          "https://app.parchaa.com/version-raju-25-2/api/1.1/wf/login-from-frontend",
-          { phone: "9115096873" },
-          {
-            headers: {
-              Authorization: `Bearer 8468803d9cc6eb75be404d9884ca12fd`
-            }
-          }
-        )
-        .then((res) => {
-          const token = res.data.response.code;
-          localStorage.setItem("token", token);
-          setUrl(
-            `https://app.parchaa.com/version-raju-25-2/doctor_parchaa_index/9115096873/${token}`
-          );
-          setLoggedIn(true);
-        });
-    } else {
-      setUrl("https://app.parchaa.com/version-raju-25-2/doctor_parchaa_index");
-    }
-  };
-  const handleAbout = () => {
-    setUrl("https://www.parchaa.com/about");
-  };
-  const handleContact = () => {
-    setUrl("https://www.parchaa.com/contact");
-  };
+  const [patients, setPatients] = useState(patients_data);
 
   return (
-    <div className="container">
-      <div className="row">
-        <div className="col-2">
-          <h1>HMIS</h1>
-          <div>
-            <button onClick={handleHome}>Home</button>
-          </div>
-          <div>
-            <button onClick={handleApp}>Log in</button>
-          </div>
-
-          <div>
-            <button onClick={handleAbout}>About us</button>
-          </div>
-          <button onClick={handleContact}>Contact Us</button>
+    <div>
+      <Router>
+        <div className="navbar navbar-expand-lg navbar-light bg-primary">
+          <h1
+            className="navbar-text"
+            style={{ paddingLeft: 10, color: "white", fontFamily: "serif" }}
+          >
+            Welcome to HMIS
+          </h1>
+          <span>
+            <button>
+              <Link to="/doctor">Doctor</Link>
+            </button>
+          </span>
+          <span>
+            <button>
+              <Link to="/reception">Reception</Link>
+            </button>
+          </span>
         </div>
-        <div className="col-10">
-          <iframe
-            src={url}
-            width="100%"
-            height="630vh"
-            style={{
-              style: "border:1px solid black"
-              // width: "100%",
-              // height: "300",
-            }}
-          ></iframe>
-        </div>
-      </div>
+        <div></div>
+        <Routes>
+          {/* <Route path="/" element={<Redirect to="/hi" />} /> */}
+          <Route path="/doctor" element={<Doctor patients={patients} />} />
+          <Route
+            path="/reception"
+            element={
+              <Reception
+                patients={patients}
+                setPatients={(val) => setPatients(val)}
+              />
+            }
+          />
+        </Routes>
+      </Router>
     </div>
   );
 }
