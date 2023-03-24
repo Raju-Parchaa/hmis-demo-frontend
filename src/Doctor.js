@@ -3,9 +3,11 @@ import LoginForm from "./LoginForm";
 import { FrontEnd } from "./Frontend";
 import doctors from "./doctor_db.json";
 
-function Doctor(props) {
+function Doctor({ patients }) {
+  const [loggedIn, setLoggedIn] = useState(false);
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+  const [loggedInDoctor, setLoggedInDoctor] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -17,8 +19,8 @@ function Doctor(props) {
       return;
     }
     if (doc.password === password) {
-      props.setLoggedIn(true);
-      props.setLoggedInDoctor(doc);
+      setLoggedIn(true);
+      setLoggedInDoctor(doc);
       setName("");
     } else {
       console.log("Wrong password");
@@ -28,8 +30,8 @@ function Doctor(props) {
 
   return (
     <div>
-      {props.loggedIn ? (
-        <FrontEnd doctor={props.loggedInDoctor} patients={props.patients} />
+      {loggedIn ? (
+        <FrontEnd doctor={loggedInDoctor} patients={patients} />
       ) : (
         <LoginForm
           handleSubmit={handleSubmit}

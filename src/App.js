@@ -6,22 +6,11 @@ import Reception from "./Reception";
 import patients_data from "./patient_db.json";
 
 function App() {
-  const [patients, setPatients] = useState([]);
+  const [patients, setPatients] = useState(patients_data);
   const [loggedInDoctor, setLoggedInDoctor] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
-    const items = JSON.parse(localStorage.getItem("patients"));
-    if (items) {
-      setPatients(items);
-    } else {
-      setPatients(patients_data);
-      localStorage.setItem("patients", JSON.stringify(patients));
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("patients", JSON.stringify(patients));
     console.log(patients);
   }, [patients]);
 
@@ -49,18 +38,7 @@ function App() {
         <div></div>
         <Routes>
           <Route path="/" element={<Redirect from="/" to="/reception" />} />
-          <Route
-            path="/doctor"
-            element={
-              <Doctor
-                patients={patients}
-                loggedIn={loggedIn}
-                loggedInDoctor={loggedInDoctor}
-                setLoggedIn={(val) => setLoggedIn(val)}
-                setLoggedInDoctor={(val) => setLoggedInDoctor(val)}
-              />
-            }
-          />
+          <Route path="/doctor" element={<Doctor patients={patients} />} />
           <Route
             path="/reception"
             element={

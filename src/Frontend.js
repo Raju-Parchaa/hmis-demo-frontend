@@ -8,13 +8,16 @@ const handlePatientProfile = (id) => {
 
 export const FrontEnd = ({ doctor, patients }) => {
   const Patient = ({ patient }) => {
+    if (!patient) {
+      return <></>;
+    }
     return (
       <div>
         <h3>Patient Name - {patient.name}</h3>
         <ul>
+          <li>Id - {patient.id}</li>
           <li>Age - {patient.age}</li>
           <li>Chief Complaint - {patient.complaint}</li>
-          <li>Medications - {patient.medications}</li>
         </ul>
         <button
           className="btn btn-success"
@@ -28,26 +31,10 @@ export const FrontEnd = ({ doctor, patients }) => {
 
   return (
     <div>
-      <h1>Hello Dr.{doctor.name}</h1>
-      <h3>Please find your appointments here</h3>
       <div className="container-fluid">
         {patients.map((patient) => (
           <Patient patient={patient} key={patient.id} />
         ))}
-      </div>
-      <div>
-        <h3>Patient Name - rishabh</h3>
-        <ul>
-          <li>Age - 23</li>
-          <li>Chief Complaint - Cough</li>
-          <li>Medications - none</li>
-        </ul>
-        <button
-          className="btn btn-success"
-          onClick={() => handlePatientProfile(1234)}
-        >
-          View Profile
-        </button>
       </div>
     </div>
   );

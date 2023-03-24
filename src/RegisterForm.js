@@ -107,6 +107,28 @@ const RegisterForm = (props) => {
         </div>
         <div>
           <label>
+            Aadhar Number :{" "}
+            <input
+              type="text"
+              value={props.aadharNumber}
+              name="password"
+              onChange={props.setAadharNumber}
+            />
+          </label>
+        </div>
+        <div>
+          <label>
+            Abha Id :{" "}
+            <input
+              type="text"
+              value={props.abhaId}
+              name="password"
+              onChange={props.setAbhaId}
+            />
+          </label>
+        </div>
+        <div>
+          <label>
             HUID :{" "}
             <input
               type="text"
@@ -124,6 +146,28 @@ const RegisterForm = (props) => {
               value={props.patientId}
               name="password"
               onChange={props.setPatientId}
+            />
+          </label>
+        </div>
+        <div>
+          <label>
+            Department ID :{" "}
+            <input
+              type="text"
+              value={props.departmentId}
+              name="password"
+              onChange={props.setDepartmentId}
+            />
+          </label>
+        </div>
+        <div>
+          <label>
+            Chief Complaint :{" "}
+            <input
+              type="text"
+              value={props.chiefComplaint}
+              name="password"
+              onChange={props.setChiefComplaint}
             />
           </label>
         </div>
